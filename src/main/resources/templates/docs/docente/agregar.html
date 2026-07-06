@@ -1,0 +1,242 @@
+<div th:fragment="modalDocente">
+
+    <div class="modal fade"
+         id="modalD"
+         tabindex="-1"
+         aria-labelledby="modalDocenteLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content shadow-lg rounded-4">
+
+                <!-- HEADER -->
+                <div class="modal-header bg-primary text-white">
+
+                    <h4 class="modal-title fw-bold" id="modalDocenteLabel">
+
+                        <i class="fa-solid"
+                           th:classappend="${modoEditar} ? ' fa-pen-to-square' : ' fa-chalkboard-user'">
+                        </i>
+
+                        <span th:text="${modoEditar} ? 'Editar Docente' : #{boton.docente.crear}">
+                            [[#{modal.docente.titulo}]]
+                        </span>
+
+                    </h4>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <!-- FORM -->
+                <form th:action="${modoEditar} ? @{/guardar} : @{/guardar}"
+                      th:object="${docente}"
+                      method="post">
+
+                    <!-- ID oculto -->
+                    <input type="hidden" th:field="*{iddocente}">
+                    <input type="hidden" name="estado" value="1">
+
+                    <div class="modal-body">
+
+                        <!-- DATOS PERSONALES -->
+                        <fieldset class="border rounded-3 p-4 mb-4">
+
+                            <legend class="float-none w-auto px-3 text-primary fw-bold">
+                                Datos personales
+                            </legend>
+
+                            <div class="row g-4">
+
+                                <!-- NOMBRES -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Nombres *</label>
+                                    <input type="text"
+                                           th:field="*{nombresd}"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- APELLIDOS -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Apellidos *</label>
+                                    <input type="text"
+                                           th:field="*{apellidosd}"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- FECHA -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Fecha de nacimiento *</label>
+                                    <input type="date"
+                                           th:field="*{fechanac}"
+                                           class="form-control">
+                                </div>
+
+                                <!-- GÉNERO -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Género</label>
+
+                                    <div class="d-flex gap-3 mt-2">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="radio"
+                                                   th:field="*{generod}"
+                                                   value="Masculino">
+                                            <label class="form-check-label">Masculino</label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="radio"
+                                                   th:field="*{generod}"
+                                                   value="Femenino">
+                                            <label class="form-check-label">Femenino</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- ESPECIALIDAD -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Especialidad *</label>
+                                    <input type="text"
+                                           th:field="*{especialidad}"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- NACIONALIDAD -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Nacionalidad *</label>
+                                    <input type="text"
+                                           th:field="*{nacionalidad}"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <b>Depto. en que Habita *</b>
+                                    <div class="input-group">
+                                            <select id="departamento"
+                                                    name="departamento.iddep"
+                                                    class="form-select"
+                                                    required>
+
+                                                <option value="">Seleccione Departamento</option>
+
+                                                <option th:each="dep : ${departamentos}"
+                                                        th:value="${dep.iddep}"
+                                                        th:text="${dep.departamento}"
+                                                        th:selected="${docente.departamento != null and docente.departamento.iddep == dep.iddep}">
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <b>Municipio</b>
+                                    <div class="input-group">
+                                        <select id="municipio"
+                                                name="municipio.idmunicipio"
+                                                class="form-select"
+                                                required>
+
+                                            <option value="">Seleccione Municipio</option>
+
+                                            <option th:each="mun : ${municipios}"
+                                                    th:value="${mun.idmunicipio}"
+                                                    th:text="${mun.municipio}"
+                                                    th:selected="${docente.municipio != null and docente.municipio.idmunicipio == mun.idmunicipio}">
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- TELÉFONO -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Teléfono *</label>
+                                    <input type="text"
+                                           th:field="*{telefono}"
+                                           class="form-control"
+                                           placeholder="0000-0000"
+                                           required>
+                                </div>
+
+                                <!-- CORREO -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Correo electrónico *</label>
+                                    <input type="email"
+                                           th:field="*{correo}"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- DIRECCIÓN -->
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold">Dirección *</label>
+                                    <textarea th:field="*{direccion}"
+                                              class="form-control"
+                                              rows="3"
+                                              required>
+                                    </textarea>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="modal-footer d-flex justify-content-between">
+
+                        <small class="text-muted">
+                            * Campos obligatorios
+                        </small>
+
+                        <div class="d-flex gap-2">
+
+                            <!-- GUARDAR / ACTUALIZAR -->
+                            <button type="submit"
+                                    class="btn"
+                                    th:classappend="${modoEditar} ? 'btn-warning' : 'btn-success'">
+
+                                <i class="fa-solid"
+                                   th:classappend="${modoEditar} ? ' fa-pen-to-square' : ' fa-floppy-disk'">
+                                </i>
+
+                                <span th:text="${modoEditar} ? #{accion.editar} : #{accion.guardar}">
+                                    Guardar
+                                </span>
+
+                            </button>
+
+                            <!-- LIMPIAR -->
+                            <button type="reset"
+                                    class="btn btn-secondary">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                Limpiar
+                            </button>
+
+                            <!-- CERRAR -->
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    data-bs-dismiss="modal">
+                                <i class="fa-solid fa-xmark"></i>
+                                Cerrar
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

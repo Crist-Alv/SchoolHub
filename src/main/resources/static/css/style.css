@@ -1,0 +1,346 @@
+main {
+    margin: auto;
+    min-height: calc(100vh - 70px);
+    overflow: auto;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 70px);
+
+    z-index: 1000;
+
+    background-color: #212529;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.sidebar .nav-link {
+    transition: all 0.3s ease;
+}
+.sidebar .nav-link:hover {
+    padding-left: 10px;
+}
+
+.menu {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+.menu::-webkit-scrollbar {
+    width: 6px;
+}
+.menu::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+.navbar-custom {
+    background-image: url('/images/fondo-navbar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.nav-link.active {
+    background-color: #0d6efd;
+    color: whitesmoke !important;
+    border-radius: 10px;
+}
+.nav-link:hover {
+    background-color: midnightblue;
+    color: whitesmoke !important;
+    border-radius: 10px;
+}
+
+.carousel-img {
+    height: 500px;
+    object-fit: cover;
+}
+
+.table-custom tbody tr:hover td,
+.table-custom tbody tr:focus-within td {
+    background-color: midnightblue !important;
+    color: whitesmoke !important;
+    transition: all 0.3s ease;
+}
+#tablaDocentes th,
+#tablaDocentes td {
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+#tablaDocentes tbody td {
+    padding: 15px 10px;
+}
+
+#tablaDocentes thead th {
+    padding: 18px 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#tablaDocentes thead th {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#tablaDocentes thead th:hover {
+    background-color: midnightblue !important;
+    color: whitesmoke !important;
+    outline: 2px solid #0d6efd;
+    outline-offset: -2px;
+}
+
+.custom-dropdown {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: midnightblue !important;
+    color: whitesmoke !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+.dropdown-custom:hover{
+    color: black !important;
+}
+.dropdown-menu.show {
+    visibility: visible;
+    animation: fadeSlide 0.5s ease;
+}
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.custom-user-bg {
+    background-image: url('/images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 10px;
+}
+
+.custom-menu-bg {
+    background-image: url('/images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.idioma-custom:hover {
+    color: midnightblue !important;
+}
+
+.user-info img {
+    border: 2px solid #fff;
+}
+
+.custom-user-bg:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+}
+
+.option-custom:hover {
+    transform: scale(1.5);
+    transition: 0.3s;
+}
+
+.btn-regis-custom {
+    transition: all 0.3s ease;
+}
+
+.btn-regis-custom:hover,
+.btn-regis-custom:focus {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgb(13 253 101 / 0.4);
+}
+.btn-regis-custom:hover,
+.btn-regis-custom:focus,
+.btn-regis-custom:hover span,
+.btn-regis-custom:focus span,
+.btn-regis-custom:hover i,
+.btn-regis-custom:focus i {
+    color: whitesmoke !important;
+    fill: whitesmoke !important;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+
+    width: 100%;
+    z-index: 1200;
+
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+
+    padding: 10px 20px;
+    text-align: center;
+
+    border-top: 1px solid rgba(255,255,255,0.2);
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   MODAL PROFESIONAL DOCENTE
+===================================================== */
+
+.modal-dialog {
+    max-width: 90%;
+    width: 1100px;
+    height: auto;
+    margin: 1.5rem auto;
+}
+
+.modal-content {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #0d6efd, #0056d6);
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(90vh - 160px);
+    background-color: #f8fbff;
+}
+
+.modal-footer {
+    flex-shrink: 0;
+    padding: 15px 25px;
+    background: white;
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* FIELDSET */
+fieldset {
+    padding: 20px !important;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-size: 1.2rem;
+    padding: 0 10px;
+}
+
+.form-control,
+.form-select {
+    min-height: 42px;
+    font-size: 0.95rem;
+}
+
+textarea.form-control {
+    min-height: 90px;
+}
+
+/* RADIO */
+.form-check-input {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.form-check-label {
+    margin-left: 5px;
+    font-weight: 500;
+}
+
+/* TEXTAREA */
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* BOTONES */
+.modal-footer .btn {
+    min-width: 120px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+}
+
+.modal-footer .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* SCROLL */
+.modal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: rgba(13,110,253,0.45);
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(13,110,253,0.7);
+}
+
+/* BOTONES SIEMPRE VISIBLES */
+.modal-footer .btn {
+    min-width: 140px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* SCROLL SOLO EN BODY */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: rgba(13,110,253,0.35);
+    border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .modal-dialog {
+        width: 95%;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+    }
+
+    legend {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,11 @@
+filter.lfs.required=true
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+user.name=Cristian Moisés Alvarado Campos
+user.email=cristian.alv0694@gmail.com
+core.autocrlf=true
+core.editor=idea --wait
+init.defaultbranch=main
+color.ui=auto
+fetch.prune=true

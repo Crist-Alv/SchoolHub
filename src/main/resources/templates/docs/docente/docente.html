@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <title>[[#{docente.pagina}]]</title>
+</head>
+<body>
+<div th:replace="layout/plantilla :: navbar"></div>
+
+<div class="d-flex justify-content-center">
+
+    <div th:replace="layout/menu :: menu"></div>
+
+    <main class="flex-grow-1">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="py-lg-2">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card shadow-lg bg-primary-subtle">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 p-4">
+
+                                    <h2 class="fw-bold text-primary m-0">
+                                        <i class="fa-solid fa-chalkboard-user"></i>
+                                        [[#{docente.tabla}]]
+                                    </h2>
+
+                                    <a href="#"
+                                            class="btn btn-primary btn-regis-custom d-flex align-items-center gap-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalD">
+                                            <i class="fa-solid fa-plus"></i> [[#{boton.docente.crear}]]
+                                    </a>
+
+                                </div>
+                                <div class="body card shadow-lg p-3">
+                                    <div class="table-responsive dataTable"
+                                         th:if="${docentes != null and docentes.?[estado == 1].size() > 0}">
+                                        <table id="tablaDocentes"
+                                               class="table table-hover align-middle table-custom text-center shadow-sm rounded">
+
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th class="py-3">[[#{tabla.docente.nomb}]]</th>
+                                                <th class="py-3">[[#{tabla.docente.apell}]]</th>
+                                                <th class="py-3">[[#{tabla.docente.esp}]]</th>
+                                                <th class="py-3">[[#{tabla.opciones}]]</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr th:each="docente : ${docentes}">
+
+                                                <td class="fw-semibold"
+                                                    th:text="${docente.nombresd}">
+                                                    Mostrar Nombre
+                                                </td>
+
+
+                                                <td class="fw-semibold"
+                                                    th:text="${docente.apellidosd}">
+                                                    Mostrar Apellido
+                                                </td>
+
+
+                                                <td>
+                                                    <span class="badge bg-info text-dark px-3 py-2 rounded-pill shadow-sm"
+                                                    th:text="${docente.especialidad}">
+                                                     Mostrar Especialidad
+                                                    </span>
+                                                </td>
+
+
+                                                <td>
+                                                    <div class="d-flex justify-content-center gap-2">
+
+                                                        <a class="btn btn-info option-custom btn-sm rounded-circle shadow option-btn"
+                                                           th:href="@{'/ver/' + ${docente.iddocente}}"
+                                                           title="Ver">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                        </a>
+
+                                                        <a class="btn btn-warning option-custom btn-sm rounded-circle shadow option-btn"
+                                                           th:href="@{'/editar/' + ${docente.iddocente}}"
+                                                           title="Editar">
+                                                            <i class="fa-solid fa-pen"></i>
+                                                        </a>
+
+                                                        <a class="btn btn-danger option-custom btn-sm rounded-circle shadow option-btn"
+                                                           th:href="@{/baja(iddocente=${docente.iddocente})}"
+                                                           title="Dar de Baja">
+                                                            <i class="fa-solid fa-thumbs-down"></i>
+                                                        </a>
+
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <div th:if="${docentes == null or docentes.empty}">
+                                        [[#{tabla.lista-vacia}]]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+<div th:replace="docs/docente/agregar :: modalDocente"></div>
+
+<div th:replace="layout/plantilla :: footer"></div>
+</body>
+</html>

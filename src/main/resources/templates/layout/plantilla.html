@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+  <meta charset="UTF-8">
+  <title>[[#{app.titulo}]]</title>
+  <link th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+  <link th:href="@{/webjars/font-awesome/7.2.0/css/all.min.css}" rel="stylesheet">
+  <link th:href="@{/webjars/datatables/1.10.25/css/dataTables.bootstrap5.min.css}" rel="stylesheet"/>
+  <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+  <script th:src="@{/webjars/datatables/1.10.25/js/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/webjars/datatables/1.10.25/js/dataTables.bootstrap5.min.js}"></script>
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+  <script th:inline="javascript">
+    $(document).ready(function () {
+
+      let idiomaTabla = [[#{tabla.idioma}]];
+
+      $('#tablaDocentes').DataTable({
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50],
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/" + idiomaTabla + ".json"
+        }
+      });
+    });
+  </script>
+
+  <script>
+    function cambiarIdioma(lang) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      window.location.href = url.toString();
+    }
+  </script>
+
+  <script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+      let abrirModal = /*[[${abrirModal}]]*/ false;
+
+      if (abrirModal) {
+        let modalElement = document.getElementById("modalD");
+
+        if (modalElement) {
+          let modal = new bootstrap.Modal(modalElement);
+          modal.show();
+        }
+      }
+
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const modalElement = document.getElementById("modalD");
+
+      if (modalElement) {
+
+        modalElement.addEventListener("hidden.bs.modal", function () {
+
+          // Regresar URL a /docente sin recargar
+          window.history.replaceState({}, document.title, "/docente");
+
+          // Recargar página limpia para resetear modo edición
+          window.location.href = "/docente";
+        });
+
+      }
+
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const departamentoSelect = document.getElementById("departamento");
+      const municipioSelect = document.getElementById("municipio");
+
+      departamentoSelect.addEventListener("change", function () {
+
+        let iddep = this.value;
+
+        municipioSelect.innerHTML = '<option value="">Seleccione Municipio</option>';
+
+        if (iddep) {
+
+          fetch('/municipios/' + iddep)
+                  .then(response => response.json())
+                  .then(data => {
+
+                    data.forEach(municipio => {
+
+                      let option = document.createElement("option");
+                      option.value = municipio.idmunicipio;
+                      option.textContent = municipio.municipio;
+
+                      municipioSelect.appendChild(option);
+
+                    });
+                  });
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-custom navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+      <img th:src="@{/images/logo.png}" width="50" height="50" alt="Logo" title="Insignia de la Escuela"/>
+      <a class="navbar-brand fw-bold m-0 text-white" th:href="@{/inicio}">
+        [[#{barra.titulo}]]
+      </a>
+    </div>
+    <div class="d-flex align-items-center">
+
+      <div class="dropdown dropdown-custom" style="color: whitesmoke">
+        <i class="fa-solid fa-gear me-2" data-bs-toggle="dropdown" title="Mas Opciones"></i>
+
+        <ul class="dropdown-menu custom-dropdown dropdown-menu-end">
+
+          <li>
+            <a class="dropdown-item" th:href="@{/perfil}">
+              <i class="fa-solid fa-gear me-2 text-primary"></i>
+              [[#{barra.conf}]]
+            </a>
+          </li>
+
+          <li>
+            <a class="dropdown-item" th:href="@{/seguridad}">
+              <i class="fa-solid fa-shield-halved me-2 text-secondary"></i> [[#{barra.seguridad}]]
+            </a>
+          </li>
+
+          <li>
+            <a th:href="@{/informacion}" target="_blank"
+               class="dropdown-item">
+              <i class="fa-solid fa-info-circle me-2 text-info"></i>
+              [[#{barra.informacion}]]
+            </a>
+          </li>
+
+          <li>
+            <a th:href="@{'/ayuda/' + ${helpFile}}" target="_blank"
+               class="dropdown-item">
+              <i class="fa-solid fa-question-circle me-2 text-info-emphasis"></i>
+              [[#{barra.ayuda}]]
+            </a>
+          </li>
+
+          <li>
+            <a class="dropdown-item"
+               data-bs-toggle="modal"
+               data-bs-target="#ModalCerrar">
+              <i class="fa-solid fa-right-from-bracket text-danger me-2"></i>
+              [[#{barra.cerrar-sesion}]]
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<footer class="footer" th:fragment="footer">
+
+      <span style="font-size: 12px;"> [[#{plantilla.pie-pagina-titulo}]] | Ing. Cristian &copy; [[#{plantilla.pie-pagina}]]</span>
+
+    <div class="text-white" style="background-color: lightslategrey">
+      <a class="text-white idioma-custom"
+         style="font-size: 15px;"
+         href="#"
+         onclick="cambiarIdioma('es')">
+        ES
+      </a> |
+
+      <a class="text-white idioma-custom"
+         style="font-size: 15px;"
+         href="#"
+         onclick="cambiarIdioma('en')">
+        EN
+      </a>
+    </div>
+</footer>
+</body>
+</html>

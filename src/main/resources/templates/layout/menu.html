@@ -1,0 +1,226 @@
+<div th:fragment="menu">
+    <section>
+        <aside class="bg-primary-subtle text-black d-flex flex-column"
+               style="width: 250px; height: 100vh; overflow: hidden;">
+            <div class="user-info custom-user-bg text-center">
+                <!-- IMAGEN -->
+                <!--            <img th:src="${usuario.sexo == 'Masculino'} ? @{/images/user.png} : @{/images/userWoman.png}"-->
+                <!--                 class="rounded-circle"-->
+                <!--                 width="100">-->
+                <div class="image mb-2">
+                    <img th:src="@{/images/user.png}"
+                         class="rounded-circle"
+                         width="80">
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center">
+                <span class="text-black fw-bold justify-content-center align-items-center">
+                    Cristian Moisés Alvarado Campos
+                    <!-- <span sec:authentication="name"></span> -->
+                </span>
+                </div>
+            </div>
+
+            <div class="menu flex-grow-1 custom-menu-bg">
+                <ul class="nav flex-column">
+                    <li class="header text-sm-center bg-white">[[#{menu.titulo}]]</li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
+                           href="#"
+                           data-bs-toggle="collapse"
+                           th:classappend="${active.startsWith('alumno')} ? '' : 'collapsed'"
+                           data-bs-target="#menuAlumno">
+
+                <span>
+                    <i class="fa-solid fa-user-graduate me-2"></i>
+                    [[#{menu.alumno.titulo}]]
+                </span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <div id="menuAlumno"
+                             class="collapse"
+                             th:classappend="${active.startsWith('alumno')} ? 'show'">
+
+                            <ul class="nav flex-column ms-3">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/alumno}"
+                                       th:classappend="${active == 'alumno'} ? 'active'">
+                                        [[#{menu.alumno.listado}]]
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/reporteA}"
+                                       th:classappend="${active == 'reportea'} ? 'active'">
+                                        [[#{menu.alumno.reporte}]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
+                           href="#"
+                           data-bs-toggle="collapse"
+                           th:classappend="${active.startsWith('docente')} ? '' : 'collapsed'"
+                           data-bs-target="#menuDocentes">
+
+                <span>
+                    <i class="fa-solid fa-chalkboard-user me-2"></i>
+                    [[#{menu.docente.titulo}]]
+                </span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <div id="menuDocentes"
+                             class="collapse"
+                             th:classappend="${active.startsWith('docente')} ? 'show'">
+
+                            <ul class="nav flex-column ms-3">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/docente}"
+                                       th:classappend="${active == 'docente'} ? 'active'">
+                                        [[#{menu.docente.listado}]]
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/reporteD}"
+                                       th:classappend="${active == 'reported'} ? 'active'">
+                                        [[#{menu.docente.reporte}]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
+                           href="#"
+                           data-bs-toggle="collapse"
+                           th:classappend="${active.startsWith('nota')} ? '' : 'collapsed'"
+                           data-bs-target="#menuNotas">
+
+                <span>
+                    <i class="fa-solid fa-clipboard me-2"></i>
+                    [[#{menu.nota.titulo}]]
+                </span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <div id="menuNotas"
+                             class="collapse"
+                             th:classappend="${active.startsWith('nota')} ? 'show'">
+
+                            <ul class="nav flex-column ms-3">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/notas}"
+                                       th:classappend="${active == 'nota'} ? 'active'">
+                                        [[#{menu.nota.listado}]]
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/reporteN}"
+                                       th:classappend="${active == 'reporten'} ? 'active'">
+                                        [[#{menu.nota.reporte}]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
+                           href="#"
+                           data-bs-toggle="collapse"
+                           th:classappend="${active.startsWith('horario')} ? '' : 'collapsed'"
+                           data-bs-target="#menuHorarios">
+
+                <span>
+                    <i class="fa-solid fa-calendar me-2"></i>
+                    [[#{menu.horario.titulo}]]
+                </span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <div id="menuHorarios"
+                             class="collapse"
+                             th:classappend="${active.startsWith('horario')} ? 'show'">
+
+                            <ul class="nav flex-column ms-3">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/horario}"
+                                       th:classappend="${active == 'horario'} ? 'active'">
+                                        [[#{menu.horario.listado}]]
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/reporteH}"
+                                       th:classappend="${active == 'reporteh'} ? 'active'">
+                                        [[#{menu.horario.reporte}]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
+                           href="#"
+                           data-bs-toggle="collapse"
+                           th:classappend="${active.startsWith('materia')} ? '' : 'collapsed'"
+                           data-bs-target="#menuMaterias">
+
+                <span>
+                    <i class="fa-solid fa-book me-2"></i>
+                    [[#{menu.materia.titulo}]]
+                </span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <div id="menuMaterias"
+                             class="collapse"
+                             th:classappend="${active.startsWith('materia')} ? 'show'">
+
+                            <ul class="nav flex-column ms-3">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/materia}"
+                                       th:classappend="${active == 'materia'} ? 'active'">
+                                        [[#{menu.materia.listado}]]
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-black"
+                                       th:href="@{/reporteM}"
+                                       th:classappend="${active == 'reportem'} ? 'active'">
+                                        [[#{menu.materia.reporte}]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </section>
+</div>
