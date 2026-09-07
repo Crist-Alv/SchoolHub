@@ -13,96 +13,12 @@
   <script th:src="@{/webjars/datatables/1.10.25/js/dataTables.bootstrap5.min.js}"></script>
   <link th:href="@{/css/style.css}" rel="stylesheet">
 
-  <script th:inline="javascript">
-    $(document).ready(function () {
-
-      let idiomaTabla = [[#{tabla.idioma}]];
-
-      $('#tablaDocentes').DataTable({
-        pageLength: 5,
-        lengthMenu: [5, 10, 25, 50],
-        language: {
-          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/" + idiomaTabla + ".json"
-        }
-      });
-    });
-  </script>
-
   <script>
     function cambiarIdioma(lang) {
       const url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       window.location.href = url.toString();
     }
-  </script>
-
-  <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-
-      let abrirModal = /*[[${abrirModal}]]*/ false;
-
-      if (abrirModal) {
-        let modalElement = document.getElementById("modalD");
-
-        if (modalElement) {
-          let modal = new bootstrap.Modal(modalElement);
-          modal.show();
-        }
-      }
-
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const modalElement = document.getElementById("modalD");
-
-      if (modalElement) {
-
-        modalElement.addEventListener("hidden.bs.modal", function () {
-
-          // Regresar URL a /docente sin recargar
-          window.history.replaceState({}, document.title, "/docente");
-
-          // Recargar página limpia para resetear modo edición
-          window.location.href = "/docente";
-        });
-
-      }
-
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const departamentoSelect = document.getElementById("departamento");
-      const municipioSelect = document.getElementById("municipio");
-
-      departamentoSelect.addEventListener("change", function () {
-
-        let iddep = this.value;
-
-        municipioSelect.innerHTML = '<option value="">Seleccione Municipio</option>';
-
-        if (iddep) {
-
-          fetch('/municipios/' + iddep)
-                  .then(response => response.json())
-                  .then(data => {
-
-                    data.forEach(municipio => {
-
-                      let option = document.createElement("option");
-                      option.value = municipio.idmunicipio;
-                      option.textContent = municipio.municipio;
-
-                      municipioSelect.appendChild(option);
-
-                    });
-                  });
-        }
-      });
-    });
   </script>
 </head>
 <body>
@@ -117,7 +33,7 @@
     <div class="d-flex align-items-center">
 
       <div class="dropdown dropdown-custom" style="color: whitesmoke">
-        <i class="fa-solid fa-gear me-2" data-bs-toggle="dropdown" title="Mas Opciones"></i>
+        <i class="fa-solid fa-gear me-2" data-bs-toggle="dropdown" th:title="#{tabla.opciones}"></i>
 
         <ul class="dropdown-menu custom-dropdown dropdown-menu-end">
 

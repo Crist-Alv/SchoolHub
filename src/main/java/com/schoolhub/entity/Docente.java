@@ -1,61 +1,51 @@
 package com.schoolhub.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name="docente")
 public class Docente {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iddocente;
+    private Long id;
 
-    @NotEmpty
-    private String nombresd;
-
-    @NotEmpty
-    private String apellidosd;
-
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechanac;
-
-    @NotEmpty
-    private String generod;
-
-    @NotEmpty
-    private String especialidad;
-
-    @NotEmpty
-    private String nacionalidad;
+    @Valid
+    @OneToOne
+    @JoinColumn(name = "persona_id", nullable = false, unique = true)
+    private Persona persona;
 
     @ManyToOne
-    @JoinColumn(name = "depdocente")
-    private Departamento departamento;
+    @JoinColumn(name = "especialidad_id", nullable = false)
+    private Especialidad especialidad;
 
-    @ManyToOne
-    @JoinColumn(name = "municipiodocente")
-    private Municipio municipio;
+    private Boolean activo;
 
-    @NotEmpty
-    private String telefono;
+    @Column(name = "fecha_creacion")
+    private LocalDateTime fechaCreacion;
 
-    @NotEmpty
-    private String correo;
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion;
 
-    @NotEmpty
-    private String direccion;
+    @PrePersist
+    protected void alCrear() {
+        LocalDateTime ahora = LocalDateTime.now();
+        fechaCreacion = ahora;
+        fechaActualizacion = ahora;
 
-    @NotNull
-    private Integer estado;
+        if (activo == null) {
+            activo = true;
+        }
+    }
 
+    @PreUpdate
+    protected void alActualizar() {
+        fechaActualizacion = LocalDateTime.now();
+    }
 }

@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class DepartamentoServiceImpl implements DepartamentoService {
 
-    @Autowired
-    private DepartamentoRepository departamentoRepository;
+    private final DepartamentoRepository departamentoRepository;
+
+    public DepartamentoServiceImpl(DepartamentoRepository departamentoRepository) {
+        this.departamentoRepository = departamentoRepository;
+    }
 
     @Override
     public List<Departamento> listarDepartamentos() {

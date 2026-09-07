@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "departamento")
-public class Departamento {
+@Table(name="tipo_via")
+public class TipoVia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,4 +15,8 @@ public class Departamento {
 
     @NotEmpty
     private String nombre;
+
+    @NotEmpty
+    @Column(length = 300)
+    private String descripcion;
 }

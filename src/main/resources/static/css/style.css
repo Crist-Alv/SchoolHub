@@ -70,6 +70,37 @@ main {
     color: whitesmoke !important;
     transition: all 0.3s ease;
 }
+
+/* =====================================================
+   DOCENTE INACTIVO
+===================================================== */
+
+#tablaDocentes tbody tr.docente-inactivo td {
+    background-color: #e2e3e5 !important;
+    color: #6c757d !important;
+    opacity: 0.75;
+    transition: all 0.3s ease;
+}
+
+/* Mantener el estado visual al pasar el mouse */
+#tablaDocentes tbody tr.docente-inactivo:hover td,
+#tablaDocentes tbody tr.docente-inactivo:focus-within td {
+    background-color: #d6d8db !important;
+    color: #495057 !important;
+}
+
+/* Badge INACTIVO */
+#tablaDocentes .docente-inactivo .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    vertical-align: middle;
+}
+#tablaDocentes tbody tr.docente-inactivo .badge {
+    background-color: #adb5bd !important;
+    color: #495057 !important;
+}
+
 #tablaDocentes th,
 #tablaDocentes td {
     vertical-align: middle !important;

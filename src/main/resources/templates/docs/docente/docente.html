@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>[[#{docente.pagina}]]</title>
 </head>
-<body>
+<body th:attr="data-abrir-modal=${abrirModal}">
 <div th:replace="layout/plantilla :: navbar"></div>
 
 <div class="d-flex justify-content-center">
@@ -34,10 +34,10 @@
 
                                 </div>
                                 <div class="body card shadow-lg p-3">
-                                    <div class="table-responsive dataTable"
-                                         th:if="${docentes != null and docentes.?[estado == 1].size() > 0}">
+                                    <div class="table-responsive dataTable">
                                         <table id="tablaDocentes"
-                                               class="table table-hover align-middle table-custom text-center shadow-sm rounded">
+                                               class="table table-hover align-middle table-custom text-center shadow-sm rounded"
+                                               th:data-idioma="#{tabla.idioma}">
 
                                             <thead class="table-dark">
                                             <tr>
@@ -49,23 +49,31 @@
                                             </thead>
 
                                             <tbody>
-                                            <tr th:each="docente : ${docentes}">
+                                            <tr th:each="docente : ${docentes}"
+                                                th:classappend="${!docente.activo} ? 'docente-inactivo' : ''">
 
-                                                <td class="fw-semibold"
-                                                    th:text="${docente.nombresd}">
+                                                <td class="fw-semibold">
+                                                    <span
+                                                    th:text="${docente.persona.nombres}">
                                                     Mostrar Nombre
+                                                    </span>
+
+                                                    <span th:if="${!docente.activo}"
+                                                    class="badge be-secondary ms-2">
+                                                        [[#{tabla.etiqueta.inactivo}]]
+                                                    </span>
                                                 </td>
 
 
                                                 <td class="fw-semibold"
-                                                    th:text="${docente.apellidosd}">
+                                                    th:text="${docente.persona.apellidos}">
                                                     Mostrar Apellido
                                                 </td>
 
 
                                                 <td>
                                                     <span class="badge bg-info text-dark px-3 py-2 rounded-pill shadow-sm"
-                                                    th:text="${docente.especialidad}">
+                                                    th:text="${docente.especialidad.nombre}">
                                                      Mostrar Especialidad
                                                     </span>
                                                 </td>
@@ -75,23 +83,29 @@
                                                     <div class="d-flex justify-content-center gap-2">
 
                                                         <a class="btn btn-info option-custom btn-sm rounded-circle shadow option-btn"
-                                                           th:href="@{'/ver/' + ${docente.iddocente}}"
-                                                           title="Ver">
+                                                           th:href="@{'/ver/' + ${docente.id}}"
+                                                           th:title="#{accion.ver}">
                                                             <i class="fa-solid fa-eye"></i>
                                                         </a>
 
-                                                        <a class="btn btn-warning option-custom btn-sm rounded-circle shadow option-btn"
-                                                           th:href="@{'/editar/' + ${docente.iddocente}}"
-                                                           title="Editar">
+                                                        <a th:if="${docente.activo}"
+                                                           class="btn btn-warning option-custom btn-sm rounded-circle shadow option-btn"
+                                                           th:href="@{'/editar/' + ${docente.id}}"
+                                                           th:title="#{accion.editar}">
                                                             <i class="fa-solid fa-pen"></i>
                                                         </a>
 
-                                                        <a class="btn btn-danger option-custom btn-sm rounded-circle shadow option-btn"
-                                                           th:href="@{/baja(iddocente=${docente.iddocente})}"
-                                                           title="Dar de Baja">
-                                                            <i class="fa-solid fa-thumbs-down"></i>
-                                                        </a>
-
+                                                        <form th:action="@{/docente/cambiar-estado/{id}(id=${docente.id})}"
+                                                        method="POST"
+                                                        class="d-inline">
+                                                        <button type="submit"
+                                                                class="btn option-custom btn-sm rounded-circle shadow option-btn"
+                                                                th:classappend="${docente.activo} ? 'btn-danger' : 'btn-success'"
+                                                                th:title="${docente.activo} ? #{accion.baja} : #{accion.alta}">
+                                                            <i class="fa-solid"
+                                                            th:classappend="${docente.activo} ? 'fa-thumbs-down' : 'fa-thumbs-up'"></i>
+                                                        </button>
+                                                        </form>
                                                     </div>
                                                 </td>
 
@@ -99,9 +113,6 @@
                                             </tbody>
 
                                         </table>
-                                    </div>
-                                    <div th:if="${docentes == null or docentes.empty}">
-                                        [[#{tabla.lista-vacia}]]
                                     </div>
                                 </div>
                             </div>
@@ -115,5 +126,7 @@
 <div th:replace="docs/docente/agregar :: modalDocente"></div>
 
 <div th:replace="layout/plantilla :: footer"></div>
+
+<script th:src="@{/js/docente.js}"></script>
 </body>
 </html>

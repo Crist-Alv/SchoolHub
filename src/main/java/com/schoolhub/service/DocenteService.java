@@ -1,14 +1,20 @@
 package com.schoolhub.service;
 
+import com.schoolhub.entity.Direccion;
 import com.schoolhub.entity.Docente;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DocenteService {
 
-    public List<Docente> listarDocentes();
+    List<Docente> listarDocentes();
 
-    public void guardar(Docente docente);
+    void guardar(Docente docente, Direccion direccion);
 
-    public Docente obtenerDocente(Docente docente);
+    Docente obtenerDocente(Long id);
+
+    Optional<Direccion> obtenerDireccionPorPersona(Long personaId);
+
+    void cambiarEstado(Long id);
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DepartamentoRepository extends CrudRepository<Departamento, Integer> {
+public interface DepartamentoRepository extends CrudRepository<Departamento, Long> {
 
     List<Departamento> findAll();
 
