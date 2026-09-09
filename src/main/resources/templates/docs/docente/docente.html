@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>[[#{docente.pagina}]]</title>
 </head>
-<body th:attr="data-abrir-modal=${abrirModal}">
+<body th:attr="data-abrir-modal=${abrirModal},
+              data-municipio-placeholder=#{docente.municipio.seleccione},
+              data-confirmar-titulo=#{docente.confirmar.titulo},
+              data-confirmar-mensaje=#{docente.confirmar.mensaje},
+              data-confirmar-baja=#{accion.baja},
+              data-confirmar-alta=#{accion.alta},
+              data-confirmar-cancelada=#{docente.confirmar.cancelada},
+              data-confirmar-si=#{docente.confirmar.si},
+              data-confirmar-no=#{docente.confirmar.no}">
 <div th:replace="layout/plantilla :: navbar"></div>
 
 <div class="d-flex justify-content-center">

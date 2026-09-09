@@ -373,6 +373,36 @@ textarea.form-control {
 }
 
 /* Botones de confirmación de Alertify */
+/* Ventana principal */
+.alertify .ajs-dialog {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 500px !important;
+}
+
+/* Encabezado */
+.alertify .ajs-header {
+    display: none;
+}
+
+/* Botón X */
+.alertify .ajs-close,
+.alertify .ajs-dialog .ajs-close {
+    display: none !important;
+}
+
+/* Contenido */
+.alertify .ajs-body {
+    padding: 25px 25px 15px 25px;
+}
+
+/* Pie de la ventana */
+.alertify .ajs-footer {
+    padding: 15px 20px 18px 20px;
+    border-top: none;
+}
+
+/* Botones */
 .alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-button {
     border: none;
     border-radius: 6px;

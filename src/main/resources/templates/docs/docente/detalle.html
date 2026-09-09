@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <title>[[#{docente.detalle.titulo}]]</title>
+</head>
+<body>
+<div th:replace="layout/plantilla :: navbar"></div>
+
+<div class="d-flex justify-content-center">
+    <div th:replace="layout/menu :: menu"></div>
+
+    <main class="flex-grow-1">
+        <section class="content">
+            <div class="container-fluid py-lg-2">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h2 class="h4 fw-bold m-0">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            [[#{docente.detalle.titulo}]]
+                        </h2>
+                        <span class="badge"
+                              th:classappend="${docente.activo} ? 'bg-success' : 'bg-secondary'"
+                              th:text="${docente.activo} ? #{docente.estado.activo} : #{tabla.etiqueta.inactivo}">
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h3 class="h5 text-primary border-bottom pb-2">[[#{docente.detalle.personales}]]</h3>
+                                <dl class="row mb-0">
+                                    <dt class="col-sm-4">[[#{modal.nombres}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.nombres}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.apellidos}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.apellidos}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.dui}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.dui ?: '-'}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.nit}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.nit ?: '-'}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.genero}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.genero}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.fechanacimiento}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.fechaNacimiento}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.estadocivil}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.estadoCivil.nombre}"></dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <h3 class="h5 text-primary border-bottom pb-2">[[#{docente.detalle.contacto}]]</h3>
+                                <dl class="row mb-0">
+                                    <dt class="col-sm-4">[[#{modal.especialidad}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.especialidad.nombre}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.correo}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.correo ?: '-'}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.telefono}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.telefono}"></dd>
+
+                                    <dt class="col-sm-4">[[#{modal.nacionalidad}]]</dt>
+                                    <dd class="col-sm-8" th:text="${docente.persona.nacionalidad}"></dd>
+
+                                    <th:block th:if="${direccion != null}">
+                                        <dt class="col-sm-4">[[#{modal.departamento}]]</dt>
+                                        <dd class="col-sm-8" th:text="${direccion.departamento.nombre}"></dd>
+
+                                        <dt class="col-sm-4">[[#{modal.munucipio}]]</dt>
+                                        <dd class="col-sm-8" th:text="${direccion.municipio.nombre}"></dd>
+
+                                        <dt class="col-sm-4">[[#{modal.direccion}]]</dt>
+                                        <dd class="col-sm-8 text-break" th:text="${direccion.direccion}"></dd>
+                                    </th:block>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white text-end">
+                        <a class="btn btn-secondary" th:href="@{/docente}">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            [[#{accion.regresar}]]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div th:replace="layout/plantilla :: footer"></div>
+</body>
+</html>

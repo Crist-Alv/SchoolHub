@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const departamentoSelect = document.getElementById("departamento");
     const municipioSelect = document.getElementById("municipio");
+    const municipioPlaceholder = document.body.dataset.municipioPlaceholder;
 
     if (!departamentoSelect || !municipioSelect) {
         return;
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function cargarMunicipios(departamentoId, municipioId = "") {
 
         municipioSelect.innerHTML =
-            '<option value="">Seleccione el Municipio...</option>';
+            '<option value="">' + municipioPlaceholder + '</option>';
 
         if (!departamentoId) {
             return;
@@ -175,23 +176,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const nombre = form.dataset.nombre;
         const apellido = form.dataset.apellido;
 
-        const accion = esActivo ? 'dar de baja' : 'activar';
+        const mensajes = document.body.dataset;
+        const accion = esActivo ? mensajes.confirmarBaja : mensajes.confirmarAlta;
 
-        alertify.confirm(
+        const confirmacion = alertify.confirm(
             '',
             '<div class="text-center">' +
 
-            '<div style="font-size: 70px; color: #dc3545; margin-bottom: 10px;">' +
+            '<div style="font-size: 58px; color: #dc3545; margin-bottom: 14px;">' +
             '<i class="fa-solid fa-triangle-exclamation"></i>' +
             '</div>' +
 
-            '<h3 style="font-weight: 600; margin-bottom: 15px;">ATENCIÓN</h3>' +
+            '<h3 style="font-weight: 600; font-size: 22px; margin: 5px 0 15px;">\n' +
+            '    ATENCIÓN\n' +
+            '</h3>' +
 
-            '<p style="font-size: 18px; margin-bottom: 9px;">' +
-            '¿Desea <strong>' + accion + '</strong> a?' +
+            '<p style="font-size: 16px; margin-bottom: 8px;">' +
+            '¿Está seguro que desea <strong>' + accion + '</strong> a?' +
             '</p>' +
 
-            '<p style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">' +
+            '<p style="font-size: 19px; font-weight: 600; margin-top: 12px; margin-bottom: 5px;">' +
+            '<i class="fa-solid fa-user" style="margin-right: 6px;"></i>' +
             nombre + ' ' + apellido +
             '</p>' +
 
@@ -210,6 +215,31 @@ document.addEventListener("DOMContentLoaded", function () {
             cancel: 'No'
         }).set({
             transition: 'zoom'
+        });
+
+        confirmacion.setContent(
+            '<div class="text-center">' +
+            '<div style="font-size: 58px; color: #dc3545; margin-bottom: 14px;">' +
+            '<i class="fa-solid fa-triangle-exclamation"></i>' +
+            '</div>' +
+            '<h3 style="font-weight: 600; font-size: 22px; margin: 5px 0 15px;">' +
+            mensajes.confirmarTitulo +
+            '</h3>' +
+            '<p style="font-size: 16px; margin-bottom: 8px;">' +
+            mensajes.confirmarMensaje + ' <strong>' + accion + '</strong> a:' +
+            '</p>' +
+            '<p style="font-size: 19px; font-weight: 600; margin-top: 12px; margin-bottom: 5px;">' +
+            '<i class="fa-solid fa-user" style="margin-right: 6px;"></i>' +
+            nombre + ' ' + apellido +
+            '</p>' +
+            '</div>'
+        );
+        confirmacion.set('labels', {
+            ok: mensajes.confirmarSi,
+            cancel: mensajes.confirmarNo
+        });
+        confirmacion.set('oncancel', function () {
+            alertify.error(mensajes.confirmarCancelada).dismissOthers();
         });
 
     });

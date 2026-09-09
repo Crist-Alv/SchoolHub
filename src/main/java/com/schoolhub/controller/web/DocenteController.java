@@ -97,6 +97,29 @@ public class DocenteController {
         return "docs/docente/docente";
     }
 
+    // MUESTRA LOS DATOS COMPLETOS DE UN DOCENTE
+    @GetMapping("/ver/{id}")
+    public String verDocente(@PathVariable Long id, Model model) {
+
+        Docente docente = docenteService.obtenerDocente(id);
+
+        // No intentamos renderizar una vista con un registro inexistente.
+        if (docente == null) {
+            return "redirect:/docente";
+        }
+
+        Direccion direccion = docenteService
+                .obtenerDireccionPorPersona(docente.getPersona().getId())
+                .orElse(null);
+
+        model.addAttribute("docente", docente);
+        model.addAttribute("direccion", direccion);
+        model.addAttribute("active", "docente");
+        model.addAttribute("helpFile", "DocenteA.pdf");
+
+        return "docs/docente/detalle";
+    }
+
     // CARGAR MUNICIPIOS POR AJAX
     @GetMapping("/municipios/{id}")
     @ResponseBody

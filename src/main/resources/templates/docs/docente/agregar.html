@@ -18,7 +18,7 @@
                            th:classappend="${modoEditar} ? ' fa-pen-to-square' : ' fa-chalkboard-user'">
                         </i>
 
-                        <span th:text="${modoEditar} ? 'Editar Docente' : #{boton.docente.crear}">
+                        <span th:text="${modoEditar} ? #{modal.docente.editar} : #{boton.docente.crear}">
                             [[#{modal.docente.titulo}]]
                         </span>
 
