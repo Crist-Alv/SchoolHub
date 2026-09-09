@@ -108,28 +108,15 @@ public class DocenteController {
     @PostMapping("/docente/guardar")
     public String guardarDocente(
             @Valid @ModelAttribute("docente") Docente docente,
-            @RequestParam("departamento.id") Long departamentoId,
-            @RequestParam("municipio.id") Long municipioId,
-            @RequestParam("direccionTexto") String direccionTexto) {
+            @ModelAttribute("direccion") Direccion direccion,
+            @RequestParam("direccionTexto") String direccionTexto,
+            @RequestParam(value = "direccionId", required = false) Long direccionId) {
 
-        Departamento departamento = departamentoService.listarDepartamentos().stream()
-                .filter(item -> item.getId().equals(departamentoId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Departamento no encontrado"));
-
-        Municipio municipio = municipioService.listarPorDepartamento(departamentoId).stream()
-                .filter(item -> item.getId().equals(municipioId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Municipio no corresponde al departamento"));
-
-        Direccion direccion = docente.getId() == null
-                ? new Direccion()
-                : docenteService.obtenerDireccionPorPersona(docente.getPersona().getId())
-                .orElseGet(Direccion::new);
-
-        direccion.setDepartamento(departamento);
-        direccion.setMunicipio(municipio);
         direccion.setDireccion(direccionTexto);
+
+        if (direccionId != null) {
+            direccion.setId(direccionId);
+        }
 
         docenteService.guardar(docente, direccion);
 

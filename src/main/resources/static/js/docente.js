@@ -1,30 +1,107 @@
 // ========================================
 // CARGAR MUNICIPIOS
 // ========================================
-function cargarMunicipios(departamentoId, municipioSeleccionado = "") {
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const departamentoSelect = document.getElementById("departamento");
     const municipioSelect = document.getElementById("municipio");
 
-    municipioSelect.innerHTML = '<option value="">Seleccione el Municipio...</option>';
+    if (!departamentoSelect || !municipioSelect) {
+        return;
+    }
 
-    if (!departamentoId) return;
+    function cargarMunicipios(departamentoId, municipioId = "") {
 
-    fetch(`/municipios/${departamentoId}`)
-        .then(response => response.json())
-        .then(municipios => {
+        municipioSelect.innerHTML =
+            '<option value="">Seleccione el Municipio...</option>';
 
-            municipios.forEach(municipio => {
-                const option = document.createElement("option");
-                option.value = municipio.id;
-                option.textContent = municipio.nombre;
-                option.selected = String(municipio.id) === String(municipioSeleccionado);
+        if (!departamentoId) {
+            return;
+        }
 
-                municipioSelect.appendChild(option);
+        fetch(`/municipios/${departamentoId}`)
+            .then(response => response.json())
+            .then(municipios => {
+
+                municipios.forEach(municipio => {
+
+                    const option = document.createElement("option");
+
+                    option.value = municipio.id;
+                    option.textContent = municipio.nombre;
+
+                    municipioSelect.appendChild(option);
+                });
+
+                // Seleccionar municipio actual al editar
+                if (municipioId) {
+                    municipioSelect.value = municipioId;
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar municipios:", error);
             });
-        })
-        .catch(error => {
-            console.error("Error al cargar municipios:", error);
-        });
-}
+    }
+
+    // Cambio manual de departamento
+    departamentoSelect.addEventListener("change", function () {
+
+        cargarMunicipios(this.value);
+    });
+
+    // Cargar datos existentes al editar
+    const departamentoActual =
+        departamentoSelect.dataset.departamento;
+
+    const municipioActual =
+        municipioSelect.dataset.municipio;
+
+    if (departamentoActual) {
+
+        departamentoSelect.value = departamentoActual;
+
+        cargarMunicipios(
+            departamentoActual,
+            municipioActual
+        );
+    }
+    // Restaurar datos al limpiar durante la edición
+    const btnLimpiar = document.getElementById("btnLimpiar");
+
+    if (btnLimpiar) {
+
+        const abrirModal =
+            document.body.dataset.abrirModal === "true";
+
+        if (abrirModal) {
+
+            btnLimpiar.addEventListener("click", function () {
+
+                setTimeout(function () {
+
+                    const departamentoOriginal =
+                        departamentoSelect.dataset.departamento;
+
+                    const municipioOriginal =
+                        municipioSelect.dataset.municipio;
+
+                    if (departamentoOriginal) {
+
+                        departamentoSelect.value =
+                            departamentoOriginal;
+
+                        cargarMunicipios(
+                            departamentoOriginal,
+                            municipioOriginal
+                        );
+                    }
+
+                }, 0);
+            });
+        }
+    }
+});
 
 // ========================================
 // DATATABLE DOCENTES
@@ -85,29 +162,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-//Carga en editar el departamento y municipio correspondiente
-document.addEventListener("DOMContentLoaded", function () {
-    const departamentoSelect = document.getElementById("departamento");
-    const municipioSelect = document.getElementById("municipio");
+//Alerta para dar de baja y alta
+    document.querySelectorAll('.form-cambiar-estado').forEach(form => {
 
-    if (!departamentoSelect || !municipioSelect) return;
+    form.addEventListener('submit', function(event) {
 
-    departamentoSelect.addEventListener("change", function () {
-        cargarMunicipios(this.value);
+        event.preventDefault();
+
+        const boton = form.querySelector('button');
+        const esActivo = boton.classList.contains('btn-danger');
+
+        const nombre = form.dataset.nombre;
+        const apellido = form.dataset.apellido;
+
+        const accion = esActivo ? 'dar de baja' : 'activar';
+
+        alertify.confirm(
+            '',
+            '<div class="text-center">' +
+
+            '<div style="font-size: 70px; color: #dc3545; margin-bottom: 10px;">' +
+            '<i class="fa-solid fa-triangle-exclamation"></i>' +
+            '</div>' +
+
+            '<h3 style="font-weight: 600; margin-bottom: 15px;">ATENCIÓN</h3>' +
+
+            '<p style="font-size: 18px; margin-bottom: 9px;">' +
+            '¿Desea <strong>' + accion + '</strong> a?' +
+            '</p>' +
+
+            '<p style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">' +
+            nombre + ' ' + apellido +
+            '</p>' +
+
+            '</div>',
+
+            function() {
+                form.submit();
+            },
+
+            function() {
+                alertify.error('Ha cancelado la operación').dismissOthers();
+            }
+
+        ).set('labels', {
+            ok: 'Sí',
+            cancel: 'No'
+        }).set({
+            transition: 'zoom'
+        });
+
     });
 
-    if (departamentoSelect.value) {
-        cargarMunicipios(departamentoSelect.value, municipioSelect.dataset.municipioSeleccionado);
-    }
-
-    const formulario = departamentoSelect.closest("form");
-
-    formulario?.addEventListener("reset", function () {
-        setTimeout(() => {
-            cargarMunicipios(
-                departamentoSelect.value,
-                municipioSelect.dataset.municipioSeleccionado
-            );
-        }, 0);
-    });
 });

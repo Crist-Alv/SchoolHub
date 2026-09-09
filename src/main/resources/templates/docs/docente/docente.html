@@ -97,7 +97,9 @@
 
                                                         <form th:action="@{/docente/cambiar-estado/{id}(id=${docente.id})}"
                                                         method="POST"
-                                                        class="d-inline">
+                                                        class="d-inline form-cambiar-estado"
+                                                              th:attr="data-nombre=${docente.persona.nombres},
+                                                                        data-apellido=${docente.persona.apellidos}">
                                                         <button type="submit"
                                                                 class="btn option-custom btn-sm rounded-circle shadow option-btn"
                                                                 th:classappend="${docente.activo} ? 'btn-danger' : 'btn-success'"

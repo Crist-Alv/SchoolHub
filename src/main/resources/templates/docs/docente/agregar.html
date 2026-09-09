@@ -39,6 +39,7 @@
                     <!-- ID oculto -->
                     <input type="hidden" th:field="*{id}">
                     <input type="hidden" th:field="*{persona.id}">
+                    <input type="hidden" name="direccionId" th:value="${direccion.id}">
 
                     <div class="modal-body">
 
@@ -185,11 +186,11 @@
                                             <select id="departamento"
                                                     name="departamento.id"
                                                     class="form-select"
+                                                    th:data-departamento="${direccion.departamento != null ? direccion.departamento.id : ''}"
                                                     required>
                                                 <option value="">[[#{modal.departeamnto.ops}]]...</option>
                                                 <option th:each="depto : ${departamentos}"
                                                         th:value="${depto.id}"
-                                                        th:selected="${direccion.departamento != null and direccion.departamento.id == depto.id}"
                                                         th:text="${depto.nombre}">
                                                 </option>
                                             </select>
@@ -203,7 +204,7 @@
                                         <select id="municipio"
                                                 name="municipio.id"
                                                 class="form-select"
-                                                th:attr="data-municipio-seleccionado=${direccion.municipio != null ? direccion.municipio.id : ''}"
+                                                th:data-municipio="${direccion.municipio != null ? direccion.municipio.id : ''}"
                                                 required>
                                             <option value="">[[#{modal.municipio.ops}]]...</option>
 
@@ -252,6 +253,7 @@
 
                             <!-- LIMPIAR -->
                             <button type="reset"
+                                    id="btnLimpiar"
                                     class="btn btn-secondary">
                                 <i class="fa-solid fa-rotate-left"></i>
                                 [[#{accion.limpiar}]]

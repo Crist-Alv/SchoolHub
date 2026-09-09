@@ -41,22 +41,59 @@ public class DocenteServiceImpl implements DocenteService {
     @Transactional
     public void guardar(Docente docente, Direccion direccion) {
 
+        // Verificar si estamos editando un docente existente
         if (docente.getId() != null) {
-            Docente existente = docenteRepository.findById(docente.getId())
-                    .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
 
-            docente.setActivo(existente.getActivo());
-            docente.setFechaCreacion(existente.getFechaCreacion());
+            Docente docenteExistente = docenteRepository
+                    .findById(docente.getId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Docente no encontrado"));
+
+            // No permitir editar docentes inactivos
+            if (!docenteExistente.getActivo()) {
+                throw new IllegalStateException(
+                        "No se puede editar un docente inactivo");
+            }
+
+            // Conservar datos que no vienen del formulario
+            docente.setFechaCreacion(docenteExistente.getFechaCreacion());
+            docente.setActivo(docenteExistente.getActivo());
         }
 
+        // Guardar o actualizar la persona
         Persona persona = docente.getPersona();
 
         personaRepository.save(persona);
 
-        direccion.setPersona(persona);
+        // Si la dirección ya existe, actualizarla
+        if (direccion.getId() != null) {
 
-        direccionRepository.save(direccion);
+            Direccion direccionExistente = direccionRepository
+                    .findById(direccion.getId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Dirección no encontrada"));
 
+            direccionExistente.setDepartamento(direccion.getDepartamento());
+            direccionExistente.setMunicipio(direccion.getMunicipio());
+            direccionExistente.setZona(direccion.getZona());
+            direccionExistente.setTipoVia(direccion.getTipoVia());
+            direccionExistente.setDireccion(direccion.getDireccion());
+            direccionExistente.setReferencia(direccion.getReferencia());
+            direccionExistente.setLugar_nacimiento(
+                    direccion.getLugar_nacimiento()
+            );
+
+            direccionRepository.save(direccionExistente);
+
+        } else {
+
+            // Crear una nueva dirección
+            direccion.setPersona(persona);
+
+            direccionRepository.save(direccion);
+        }
+
+        // Guardar o actualizar el docente
         docenteRepository.save(docente);
     }
 
