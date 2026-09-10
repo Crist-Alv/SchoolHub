@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MunicipioRepository extends CrudRepository<Municipio, Integer> {
+public interface MunicipioRepository extends CrudRepository<Municipio, Long> {
 
-    List<Municipio> findByDepartamento_Iddep(Integer iddep);
+    List<Municipio> findByDepartamento_Id(Long id);
 
 }

@@ -1,4 +1,4 @@
-package com.schoolhub.controller;
+package com.schoolhub.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MunicipioService {
 
-    public List<Municipio> listarPorDepartamento(Integer iddep);
+    public List<Municipio> listarPorDepartamento(Long id);
 
 }

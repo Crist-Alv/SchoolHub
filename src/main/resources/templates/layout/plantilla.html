@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+     <!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
 <head th:fragment="head">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>[[#{app.titulo}]]</title>
   <link th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" rel="stylesheet">
   <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
@@ -12,21 +13,9 @@
   <script th:src="@{/webjars/datatables/1.10.25/js/jquery.dataTables.min.js}"></script>
   <script th:src="@{/webjars/datatables/1.10.25/js/dataTables.bootstrap5.min.js}"></script>
   <link th:href="@{/css/style.css}" rel="stylesheet">
-
-  <script th:inline="javascript">
-    $(document).ready(function () {
-
-      let idiomaTabla = [[#{tabla.idioma}]];
-
-      $('#tablaDocentes').DataTable({
-        pageLength: 5,
-        lengthMenu: [5, 10, 25, 50],
-        language: {
-          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/" + idiomaTabla + ".json"
-        }
-      });
-    });
-  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
   <script>
     function cambiarIdioma(lang) {
@@ -34,75 +23,6 @@
       url.searchParams.set('lang', lang);
       window.location.href = url.toString();
     }
-  </script>
-
-  <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-
-      let abrirModal = /*[[${abrirModal}]]*/ false;
-
-      if (abrirModal) {
-        let modalElement = document.getElementById("modalD");
-
-        if (modalElement) {
-          let modal = new bootstrap.Modal(modalElement);
-          modal.show();
-        }
-      }
-
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const modalElement = document.getElementById("modalD");
-
-      if (modalElement) {
-
-        modalElement.addEventListener("hidden.bs.modal", function () {
-
-          // Regresar URL a /docente sin recargar
-          window.history.replaceState({}, document.title, "/docente");
-
-          // Recargar página limpia para resetear modo edición
-          window.location.href = "/docente";
-        });
-
-      }
-
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const departamentoSelect = document.getElementById("departamento");
-      const municipioSelect = document.getElementById("municipio");
-
-      departamentoSelect.addEventListener("change", function () {
-
-        let iddep = this.value;
-
-        municipioSelect.innerHTML = '<option value="">Seleccione Municipio</option>';
-
-        if (iddep) {
-
-          fetch('/municipios/' + iddep)
-                  .then(response => response.json())
-                  .then(data => {
-
-                    data.forEach(municipio => {
-
-                      let option = document.createElement("option");
-                      option.value = municipio.idmunicipio;
-                      option.textContent = municipio.municipio;
-
-                      municipioSelect.appendChild(option);
-
-                    });
-                  });
-        }
-      });
-    });
   </script>
 </head>
 <body>
@@ -116,8 +36,18 @@
     </div>
     <div class="d-flex align-items-center">
 
-      <div class="dropdown dropdown-custom" style="color: whitesmoke">
-        <i class="fa-solid fa-gear me-2" data-bs-toggle="dropdown" title="Mas Opciones"></i>
+      <button class="btn btn-outline-light d-lg-none me-2 no-print"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#appSidebar"
+              aria-controls="appSidebar"
+              aria-expanded="false"
+              th:aria-label="#{menu.alternar}">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="dropdown dropdown-custom no-print" style="color: whitesmoke">
+        <i class="fa-solid fa-gear me-2" data-bs-toggle="dropdown" th:title="#{tabla.opciones}"></i>
 
         <ul class="dropdown-menu custom-dropdown dropdown-menu-end">
 
@@ -164,7 +94,7 @@
   </div>
 </nav>
 
-<footer class="footer" th:fragment="footer">
+<footer class="footer no-print" th:fragment="footer">
 
       <span style="font-size: 12px;"> [[#{plantilla.pie-pagina-titulo}]] | Ing. Cristian &copy; [[#{plantilla.pie-pagina}]]</span>
 

@@ -1,24 +1,32 @@
-main {
-    margin: auto;
+html,
+body {
+    min-height: 100%;
+    --footer-space: 72px;
+}
+
+.app-shell {
+    display: flex;
+    align-items: stretch;
     min-height: calc(100vh - 70px);
-    overflow: auto;
+    padding-bottom: var(--footer-space);
+}
+
+.sidebar-wrapper {
+    flex: 0 0 250px;
+}
+
+main {
+    min-width: 0;
+    width: 100%;
+    padding-bottom: 1.5rem;
 }
 
 .sidebar {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
+    flex: 0 0 250px;
     width: 250px;
     height: calc(100vh - 70px);
-
-    z-index: 1000;
-
-    background-color: #212529;
-    color: white;
-
-    display: flex;
-    flex-direction: column;
-
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -48,6 +56,14 @@ main {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.navbar-custom .container-fluid {
+    gap: 0.5rem;
+}
+
+.navbar-custom .navbar-brand {
+    white-space: normal;
+}
 .nav-link.active {
     background-color: #0d6efd;
     color: whitesmoke !important;
@@ -70,6 +86,37 @@ main {
     color: whitesmoke !important;
     transition: all 0.3s ease;
 }
+
+/* =====================================================
+   DOCENTE INACTIVO
+===================================================== */
+
+#tablaDocentes tbody tr.docente-inactivo td {
+    background-color: #e2e3e5 !important;
+    color: #6c757d !important;
+    opacity: 0.75;
+    transition: all 0.3s ease;
+}
+
+/* Mantener el estado visual al pasar el mouse */
+#tablaDocentes tbody tr.docente-inactivo:hover td,
+#tablaDocentes tbody tr.docente-inactivo:focus-within td {
+    background-color: #d6d8db !important;
+    color: #495057 !important;
+}
+
+/* Badge INACTIVO */
+#tablaDocentes .docente-inactivo .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    vertical-align: middle;
+}
+#tablaDocentes tbody tr.docente-inactivo .badge {
+    background-color: #adb5bd !important;
+    color: #495057 !important;
+}
+
 #tablaDocentes th,
 #tablaDocentes td {
     vertical-align: middle !important;
@@ -181,13 +228,11 @@ main {
 
 .footer {
     position: fixed;
+    right: 0;
     bottom: 0;
     left: 0;
-
-
+    z-index: 1030;
     width: 100%;
-    z-index: 1200;
-
     background-color: rgba(0, 0, 0, 0.75);
     color: white;
 
@@ -203,8 +248,8 @@ main {
 ===================================================== */
 
 .modal-dialog {
-    max-width: 90%;
-    width: 1100px;
+    max-width: min(90%, 1100px);
+    width: auto;
     height: auto;
     margin: 1.5rem auto;
 }
@@ -266,7 +311,6 @@ textarea.form-control {
     min-height: 90px;
 }
 
-/* RADIO */
 .form-check-input {
     transform: scale(1.2);
     cursor: pointer;
@@ -277,13 +321,11 @@ textarea.form-control {
     font-weight: 500;
 }
 
-/* TEXTAREA */
 textarea.form-control {
     min-height: 120px;
     resize: vertical;
 }
 
-/* BOTONES */
 .modal-footer .btn {
     min-width: 120px;
     padding: 8px 16px;
@@ -330,7 +372,6 @@ textarea.form-control {
     border-radius: 10px;
 }
 
-/* RESPONSIVE */
 @media (max-width: 992px) {
     .modal-dialog {
         width: 95%;
@@ -342,5 +383,258 @@ textarea.form-control {
 
     legend {
         font-size: 1rem;
+    }
+}
+
+/* Botones de confirmación de Alertify */
+/* Ventana principal */
+.alertify .ajs-dialog {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 500px !important;
+}
+
+/* Encabezado */
+.alertify .ajs-header {
+    display: none;
+}
+
+/* Botón X */
+.alertify .ajs-close,
+.alertify .ajs-dialog .ajs-close {
+    display: none !important;
+}
+
+/* Contenido */
+.alertify .ajs-body {
+    padding: 25px 25px 15px 25px;
+}
+
+/* Pie de la ventana */
+.alertify .ajs-footer {
+    padding: 15px 20px 18px 20px;
+    border-top: none;
+}
+
+/* Botones */
+.alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-button {
+    border: none;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Botón Sí */
+.alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-ok {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+.alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-ok:hover {
+    background-color: #157347;
+    transform: translateY(-1px);
+}
+
+/* Botón No */
+.alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-cancel {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-cancel:hover {
+    background-color: #bb2d3b;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 991.98px) {
+    .app-shell {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: 50vh;
+    }
+
+    .sidebar-wrapper {
+        width: 100%;
+    }
+
+    .sidebar .menu {
+        max-height: 320px;
+    }
+
+    main {
+        padding: 1rem 0.5rem 1.5rem;
+    }
+
+    .carousel-img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    html,
+    body {
+        --footer-space: 96px;
+    }
+
+    .navbar-custom .navbar-brand {
+        font-size: 0.95rem;
+    }
+
+    .carousel-img {
+        height: 220px;
+    }
+
+    .modal-dialog {
+        max-width: calc(100% - 1rem);
+        margin: 0.5rem auto;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    fieldset {
+        padding: 1rem !important;
+    }
+
+    .modal-footer .btn,
+    .modal-footer .d-flex {
+        width: 100%;
+    }
+
+    .modal-footer .btn {
+        min-width: 0;
+    }
+
+    .alertify .ajs-dialog {
+        width: calc(100% - 2rem) !important;
+    }
+}
+
+/* estilo para imprimir*/
+@page {
+    size: A4 portrait;
+    margin: 12mm;
+}
+
+@media print {
+
+    /* Ocultar elementos de navegación y acciones */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Eliminar fondos innecesarios */
+    body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .app-shell {
+        display: block !important;
+    }
+
+    main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .content {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .container-fluid {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Ficha */
+    .card {
+        width: 100% !important;
+        margin: 0 !important;
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+
+    .card-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .card-body {
+        padding: 15px !important;
+    }
+
+    /* Mantener las dos columnas */
+    .row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .row > .col-lg-6 {
+        width: 50% !important;
+        flex: 0 0 50% !important;
+    }
+
+    /* Mantener cada etiqueta y valor en la misma línea */
+    dl.row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    dl.row {
+        display: grid !important;
+        grid-template-columns: 48% 52% !important;
+        margin: 0 !important;
+        font-size: 10.5pt;
+        line-height: 1.35;
+    }
+
+    dl.row > dt.col-md-5,
+    dl.row > dd.col-md-7 {
+        width: auto !important;
+        flex: none !important;
+        margin: 0 !important;
+    }
+
+    dl.row > dt.col-md-5 {
+        white-space: nowrap !important;
+        padding-right: 8px !important;
+    }
+
+    dl.row > dd.col-md-7 {
+        min-width: 0 !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+    }
+
+    /* Evitar cortes innecesarios */
+    .card,
+    .card-body,
+    .row {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    h3 {
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+        font-size: 12pt !important;
     }
 }

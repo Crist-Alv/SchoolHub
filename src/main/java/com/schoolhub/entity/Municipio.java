@@ -10,13 +10,12 @@ public class Municipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idmunicipio")
-    private Integer idmunicipio;
+    private Long id;
 
-    private String municipio;
+    private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "iddep")
+    @JoinColumn(name = "departamento_id")
     private Departamento departamento;
 
 }

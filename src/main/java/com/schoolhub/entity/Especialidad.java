@@ -1,18 +1,19 @@
 package com.schoolhub.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "departamento")
-public class Departamento {
+@Table(name="especialidad")
+public class Especialidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotBlank
+    @Column(nullable = false, unique = true)
     private String nombre;
 }
