@@ -8,7 +8,6 @@ import com.schoolhub.entity.Docente;
 import com.schoolhub.repository.PersonaRepository;
 import com.schoolhub.service.DocenteService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

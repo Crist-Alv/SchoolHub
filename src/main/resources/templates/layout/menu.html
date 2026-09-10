@@ -1,7 +1,5 @@
-<div th:fragment="menu">
-    <section>
-        <aside class="bg-primary-subtle text-black d-flex flex-column"
-               style="width: 250px; height: 100vh; overflow: hidden;">
+<div th:fragment="menu" id="appSidebar" class="sidebar-wrapper collapse d-lg-block">
+        <aside class="sidebar bg-primary-subtle text-black d-flex flex-column">
             <div class="user-info custom-user-bg text-center">
                 <!-- IMAGEN -->
                 <!--            <img th:src="${usuario.sexo == 'Masculino'} ? @{/images/user.png} : @{/images/userWoman.png}"-->
@@ -222,5 +220,4 @@
                 </ul>
             </div>
         </aside>
-    </section>
 </div>

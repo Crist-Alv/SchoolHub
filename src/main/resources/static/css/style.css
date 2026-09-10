@@ -1,24 +1,32 @@
-main {
-    margin: auto;
+html,
+body {
+    min-height: 100%;
+    --footer-space: 72px;
+}
+
+.app-shell {
+    display: flex;
+    align-items: stretch;
     min-height: calc(100vh - 70px);
-    overflow: auto;
+    padding-bottom: var(--footer-space);
+}
+
+.sidebar-wrapper {
+    flex: 0 0 250px;
+}
+
+main {
+    min-width: 0;
+    width: 100%;
+    padding-bottom: 1.5rem;
 }
 
 .sidebar {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
+    flex: 0 0 250px;
     width: 250px;
     height: calc(100vh - 70px);
-
-    z-index: 1000;
-
-    background-color: #212529;
-    color: white;
-
-    display: flex;
-    flex-direction: column;
-
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -47,6 +55,14 @@ main {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.navbar-custom .container-fluid {
+    gap: 0.5rem;
+}
+
+.navbar-custom .navbar-brand {
+    white-space: normal;
 }
 .nav-link.active {
     background-color: #0d6efd;
@@ -212,13 +228,11 @@ main {
 
 .footer {
     position: fixed;
+    right: 0;
     bottom: 0;
     left: 0;
-
-
+    z-index: 1030;
     width: 100%;
-    z-index: 1200;
-
     background-color: rgba(0, 0, 0, 0.75);
     color: white;
 
@@ -234,8 +248,8 @@ main {
 ===================================================== */
 
 .modal-dialog {
-    max-width: 90%;
-    width: 1100px;
+    max-width: min(90%, 1100px);
+    width: auto;
     height: auto;
     margin: 1.5rem auto;
 }
@@ -434,4 +448,76 @@ textarea.form-control {
 .alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-cancel:hover {
     background-color: #bb2d3b;
     transform: translateY(-1px);
+}
+
+@media (max-width: 991.98px) {
+    .app-shell {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: 50vh;
+    }
+
+    .sidebar-wrapper {
+        width: 100%;
+    }
+
+    .sidebar .menu {
+        max-height: 320px;
+    }
+
+    main {
+        padding: 1rem 0.5rem 1.5rem;
+    }
+
+    .carousel-img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    html,
+    body {
+        --footer-space: 96px;
+    }
+
+    .navbar-custom .navbar-brand {
+        font-size: 0.95rem;
+    }
+
+    .carousel-img {
+        height: 220px;
+    }
+
+    .modal-dialog {
+        max-width: calc(100% - 1rem);
+        margin: 0.5rem auto;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    fieldset {
+        padding: 1rem !important;
+    }
+
+    .modal-footer .btn,
+    .modal-footer .d-flex {
+        width: 100%;
+    }
+
+    .modal-footer .btn {
+        min-width: 0;
+    }
+
+    .alertify .ajs-dialog {
+        width: calc(100% - 2rem) !important;
+    }
 }
