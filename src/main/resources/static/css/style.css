@@ -521,3 +521,120 @@ textarea.form-control {
         width: calc(100% - 2rem) !important;
     }
 }
+
+/* estilo para imprimir*/
+@page {
+    size: A4 portrait;
+    margin: 12mm;
+}
+
+@media print {
+
+    /* Ocultar elementos de navegación y acciones */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Eliminar fondos innecesarios */
+    body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .app-shell {
+        display: block !important;
+    }
+
+    main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .content {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .container-fluid {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Ficha */
+    .card {
+        width: 100% !important;
+        margin: 0 !important;
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+
+    .card-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .card-body {
+        padding: 15px !important;
+    }
+
+    /* Mantener las dos columnas */
+    .row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .row > .col-lg-6 {
+        width: 50% !important;
+        flex: 0 0 50% !important;
+    }
+
+    /* Mantener cada etiqueta y valor en la misma línea */
+    dl.row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    dl.row {
+        display: grid !important;
+        grid-template-columns: 48% 52% !important;
+        margin: 0 !important;
+        font-size: 10.5pt;
+        line-height: 1.35;
+    }
+
+    dl.row > dt.col-md-5,
+    dl.row > dd.col-md-7 {
+        width: auto !important;
+        flex: none !important;
+        margin: 0 !important;
+    }
+
+    dl.row > dt.col-md-5 {
+        white-space: nowrap !important;
+        padding-right: 8px !important;
+    }
+
+    dl.row > dd.col-md-7 {
+        min-width: 0 !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+    }
+
+    /* Evitar cortes innecesarios */
+    .card,
+    .card-body,
+    .row {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    h3 {
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+        font-size: 12pt !important;
+    }
+}
